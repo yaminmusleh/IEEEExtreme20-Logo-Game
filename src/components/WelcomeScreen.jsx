@@ -4,8 +4,8 @@ import { keyframes } from "@mui/material/styles";
 import { gameConfig } from "../config/gameConfig.js";
 
 const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 export default function WelcomeScreen({ onStart }) {

@@ -5,9 +5,9 @@ import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupported
 import { keyframes } from "@mui/material/styles";
 import { gameConfig } from "../config/gameConfig.js";
 
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 // App.jsx renders this with key={logo.id}, so all local state resets every round.
@@ -33,19 +33,18 @@ export default function ChallengeCard({ logo, isSubmitting, onSubmit }) {
   return (
     <Paper
       elevation={0}
-      sx={{ p: { xs: 2.5, sm: 4 }, width: "100%", animation: `${fadeUp} 400ms ease-out both` }}
+      sx={{ p: { xs: 2.5, sm: 4 }, width: "100%", animation: `${fadeIn} 200ms ease-out both` }}
     >
       {/* White tile so monochrome logos stay visible on the dark theme */}
       <Box
         sx={{
           bgcolor: "#FFFFFF",
           borderRadius: 4,
-          height: { xs: 220, sm: 280 },
-          display: "grid",
-          placeItems: "center",
-          p: { xs: 3, sm: 5 },
+          height: { xs: 200, sm: 240 },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           mb: 3,
-          boxShadow: "0 0 0 1px rgba(255,255,255,0.08), 0 20px 50px rgba(0,0,0,0.35)",
         }}
       >
         {!imageFailed && (
@@ -58,8 +57,9 @@ export default function ChallengeCard({ logo, isSubmitting, onSubmit }) {
             onLoad={() => setImageLoaded(true)}
             onError={() => setImageFailed(true)}
             sx={{
-              maxWidth: "100%",
-              maxHeight: "100%",
+              // Fixed size: SVGs without intrinsic dimensions would otherwise fill the tile.
+              width: { xs: 120, sm: 150 },
+              height: { xs: 120, sm: 150 },
               objectFit: "contain",
               display: imageLoaded ? "block" : "none",
               userSelect: "none",
@@ -68,8 +68,8 @@ export default function ChallengeCard({ logo, isSubmitting, onSubmit }) {
         )}
         {!imageLoaded && !imageFailed && <CircularProgress aria-label="Loading logo" />}
         {imageFailed && (
-          <Box sx={{ textAlign: "center", color: "#5A6B8C" }}>
-            <ImageNotSupportedOutlinedIcon sx={{ fontSize: 56 }} />
+          <Box sx={{ textAlign: "center", color: "#5A6B8C", px: 2 }}>
+            <ImageNotSupportedOutlinedIcon sx={{ fontSize: 48 }} />
             <Typography variant="body2">Logo unavailable. Type your best guess or ask an organizer.</Typography>
           </Box>
         )}
